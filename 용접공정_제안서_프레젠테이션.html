@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>용접공정 제전단가 가중치 정산제 도입 및 2027 소사장제 전환 제안서</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: '맑은 고딕', 'Malgun Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #1a1a2e;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .presentation-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    width: 100%;
+    height: 100%;
+    padding: 60px 80px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    overflow-y: auto;
+  }
+
+  .slide.active {
+    display: flex;
+  }
+
+  .slide-number {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  h1 {
+    font-size: 48px;
+    margin-bottom: 30px;
+    color: #fff;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 36px;
+    margin-bottom: 25px;
+    color: #4fc3f7;
+    border-bottom: 3px solid #4fc3f7;
+    padding-bottom: 10px;
+    width: 100%;
+  }
+
+  h3 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #81c784;
+  }
+
+  .slide-content {
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  ul, ol {
+    margin-left: 30px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+
+  li {
+    margin-bottom: 12px;
+    font-size: 20px;
+  }
+
+  .highlight {
+    color: #ffd54f;
+    font-weight: 600;
+  }
+
+  .problem-list {
+    background: rgba(244, 67, 54, 0.1);
+    border-left: 4px solid #f44336;
+    padding: 20px 30px;
+    margin: 20px 0;
+    border-radius: 8px;
+  }
+
+  .goal-list {
+    background: rgba(76, 175, 80, 0.1);
+    border-left: 4px solid #4caf50;
+    padding: 20px 30px;
+    margin: 20px 0;
+    border-radius: 8px;
+  }
+
+  .structure-list {
+    background: rgba(33, 150, 243, 0.1);
+    border-left: 4px solid #2196f3;
+    padding: 20px 30px;
+    margin: 20px 0;
+    border-radius: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  th {
+    background: rgba(79, 195, 247, 0.2);
+    color: #4fc3f7;
+    font-weight: 600;
+  }
+
+  .formula {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .example-box {
+    background: rgba(129, 199, 132, 0.1);
+    border: 2px solid #81c784;
+    padding: 25px;
+    border-radius: 8px;
+    margin: 20px 0;
+  }
+
+  .navigation {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+  }
+
+  .nav-btn {
+    padding: 12px 24px;
+    background: rgba(79, 195, 247, 0.3);
+    border: 2px solid #4fc3f7;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+
+  .nav-btn:hover {
+    background: rgba(79, 195, 247, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .title-slide {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title-slide h1 {
+    font-size: 56px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #4fc3f7, #81c784);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 20px;
+  }
+
+  .author {
+    position: absolute;
+    bottom: 100px;
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .checkmark {
+    color: #81c784;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  .arrow {
+    color: #4fc3f7;
+    margin-right: 10px;
+  }
+
+  .key-point {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 15px 0;
+    color: #ffd54f;
+  }
+</style>
+</head>
+<body>
+  <div class="presentation-container">
+    
+    <!-- 슬라이드 1: 표지 -->
+    <div class="slide active title-slide">
+      <div class="slide-number">1 / 15</div>
+      <h1>용접공정 제전단가 가중치 정산제 도입 및<br>2027 소사장제(도급제) 전환 제안서</h1>
+      <div class="subtitle">2026년 안정화 구조 구축</div>
+      <div class="author">엠에프테크 생산팀 정미란</div>
+    </div>
+
+    <!-- 슬라이드 2: 제안 배경 -->
+    <div class="slide">
+      <div class="slide-number">2 / 15</div>
+      <div class="slide-content">
+        <h2>제안 배경</h2>
+        <h3>2025년 현재 문제</h3>
+        <div class="problem-list">
+          <ul>
+            <li>용접공정은 <span class="highlight">일당제 + 잔업·특근 중심의 고정비 구조</span></li>
+            <li>물량 변동과 무관하게 인건비가 고정으로 지출</li>
+            <li>물량 부족 시 1인 월 600만원, 다수 작업 시 1인 월 1,000만원 발생</li>
+            <li>자재 지연·도면 오류·급단납기로 일정 붕괴 반복</li>
+            <li>물량 자체도 "꾸준하지 못함"</li>
+          </ul>
+        </div>
+        <div class="key-point">
+          <span class="arrow">👉</span> 회사 비용 리스크 증가 + 작업자 불만 증가 + 조직 신뢰도 저하
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 3: 가장 큰 근본 문제 -->
+    <div class="slide">
+      <div class="slide-number">3 / 15</div>
+      <div class="slide-content">
+        <h2>가장 큰 근본 문제</h2>
+        <div class="problem-list">
+          <div class="key-point"><span class="checkmark">✅</span> 1) 회사: 물량 부족 시 적자</div>
+          <div class="key-point"><span class="checkmark">✅</span> 2) 용접사: 물량 부족 시 수입 감소 → 이탈 가능성 크게 증가</div>
+          <div class="key-point"><span class="checkmark">✅</span> 3) 조직 전체: 영업/구매/생산/품질 사이의 흐름 불안정</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 4: 핵심 목표 -->
+    <div class="slide">
+      <div class="slide-number">4 / 15</div>
+      <div class="slide-content">
+        <h2>핵심 목표</h2>
+        <div class="goal-list">
+          <div class="key-point"><span class="checkmark">✅</span> 회사의 손실 구조 제거</div>
+          <div class="key-point"><span class="checkmark">✅</span> 용접사가 "불안하지 않게" 일할 수 있는 구조</div>
+          <div class="key-point"><span class="checkmark">✅</span> 공정한 보상체계 구축</div>
+          <div class="key-point"><span class="checkmark">✅</span> 물량이 적어도 조직 전체가 흔들리지 않는 시스템</div>
+          <div class="key-point"><span class="checkmark">✅</span> 2027년 소사장제로 자연스럽게 전환할 수 있는 기반 확보</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 5: 2026 운영의 핵심 구조 -->
+    <div class="slide">
+      <div class="slide-number">5 / 15</div>
+      <div class="slide-content">
+        <h2>2026 운영의 핵심 구조</h2>
+        <div class="structure-list">
+          <div class="key-point"><span class="checkmark">✅</span> ① 제전 단가 기반 가중치 정산(1/N 아님 → 가중치 비율 기반)</div>
+          <div class="key-point"><span class="checkmark">✅</span> ② 용접사·제관사 등급제 + 분기별 가중치 보정</div>
+          <div class="key-point"><span class="checkmark">✅</span> ③ 회사 사유 문제(자재·도면·단납기) → 별도 인센티브 지급</div>
+          <div class="key-point"><span class="checkmark">✅</span> ④ 자재 입고·물량 관리 체계 정립</div>
+          <div class="key-point"><span class="checkmark">✅</span> ⑤ "일 없는 날 대기 없음" → 조기퇴근/개인활동 허용</div>
+          <div class="key-point"><span class="checkmark">✅</span> ⑥ 용접사 직접 영업 시 인센티브 지급</div>
+          <div class="key-point"><span class="checkmark">✅</span> ⑦ 2027 도급단가 확정 및 소사장제 전환</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 6: 2026년 제전단가 가중치 정산 방식 -->
+    <div class="slide">
+      <div class="slide-number">6 / 15</div>
+      <div class="slide-content">
+        <h2>2026년 제전단가 가중치 정산 방식</h2>
+        <h3>가중치(초기값)</h3>
+        <ul>
+          <li>상급: 260,000원 → <span class="highlight">1.13</span></li>
+          <li>중급: 250,000원 → <span class="highlight">1.09</span></li>
+          <li>관리자: 230,000원 → <span class="highlight">1.00</span></li>
+        </ul>
+        <h3>배분 공식</h3>
+        <div class="formula">
+          개인 배분액 = W × (개인 가중치 ÷ 전체 가중치 합)
+        </div>
+        <div class="example-box">
+          <h3>예시</h3>
+          <p><strong>26-001 하우징 W = 2,000,000원</strong></p>
+          <p>가중치 합 = 4.31점</p>
+          <ul>
+            <li>상급 A → 524,350원</li>
+            <li>중급 B → 505,800원</li>
+            <li>중급 C → 505,800원</li>
+            <li>관리자 D → 463,200원</li>
+          </ul>
+          <p><span class="checkmark">✔</span> 숙련도·품질·속도 차이가 정직하게 반영됨</p>
+          <p><span class="checkmark">✔</span> 회사는 물량(Q)만큼만 비용 발생 → 손실 제거</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 7: 변동비 단가(W) 분석 -->
+    <div class="slide">
+      <div class="slide-number">7 / 15</div>
+      <div class="slide-content">
+        <h2>변동비 단가(W) 분석</h2>
+        <h3>일당제 기준 총인건비</h3>
+        <ul>
+          <li>30대 생산 시 = <span class="highlight">4,000만 원</span></li>
+          <li>10대 생산 시 = <span class="highlight">2,400만 원</span></li>
+        </ul>
+        <h3>동일 비용이 되려면</h3>
+        <ul>
+          <li>W = 133만 원(30대 기준)</li>
+          <li>W = 240만 원(10대 기준)</li>
+        </ul>
+        <div class="key-point">
+          <span class="arrow">➡</span> 물량이 적을수록 비용 급등해야 동일 구조 유지됨
+        </div>
+        <div class="key-point">
+          <span class="arrow">➡</span> <span class="highlight">저물량 시 적자가 발생하는 구조가 일당제</span>
+        </div>
+        <h3>2026년 제안 W</h3>
+        <div class="example-box">
+          <p>기본 W = <span class="highlight">150만 원/대</span> (제품 난이도 따라 ±)</p>
+          <ul>
+            <li><span class="checkmark">✔</span> 월 30대 → 4,500만</li>
+            <li><span class="checkmark">✔</span> 월 10대 → 1,500만 (<span class="highlight">900만 절감</span>)</li>
+            <li><span class="checkmark">✔</span> 회사는 손실 제거</li>
+            <li><span class="checkmark">✔</span> 용접사는 물량 있을 때 더 높은 수익 가능</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 8: 용접사 이탈 방지 전략 -->
+    <div class="slide">
+      <div class="slide-number">8 / 15</div>
+      <div class="slide-content">
+        <h2>용접사 이탈 방지 전략(핵심)</h2>
+        <div class="structure-list">
+          <div class="key-point"><span class="checkmark">✅</span> 1) 물량 부족해도 "회사사유 손실"은 보상</div>
+          <ul style="margin-left: 50px; margin-top: 10px;">
+            <li>자재 지연, 도면 오류, 급단납기는 전부 인센티브 지급</li>
+            <li>회사 리스크를 용접사에게 떠넘기지 않음</li>
+          </ul>
+          <div class="key-point"><span class="checkmark">✅</span> 2) 2027년 소사장제 전환 시 더 높은 단가 제공</div>
+          <ul style="margin-left: 50px; margin-top: 10px;">
+            <li>"1년만 버티면 더 많이 벌 수 있다"는 미래 확실성 제공</li>
+          </ul>
+          <div class="key-point"><span class="checkmark">✅</span> 3) 대기 없음 → 조기퇴근 및 시간 활용</div>
+          <ul style="margin-left: 50px; margin-top: 10px;">
+            <li>물량이 적어도 스트레스 없음</li>
+            <li>"괜히 붙잡아 두는 회사"가 아님</li>
+          </ul>
+          <div class="key-point"><span class="checkmark">✅</span> 4) <span class="highlight">용접사의 직접 영업 허용(매우 중요)</span></div>
+          <ul style="margin-left: 50px; margin-top: 10px;">
+            <li>회사 물량이 적어서 벌 기회가 없다는 문제를</li>
+            <li>→ "스스로 영업해서 물량 확보 가능"한 구조로 바꿈.</li>
+            <li>영업부와 협의하여 단가 산정 후</li>
+            <li>→ 해당 오더를 확보한 용접사에게 <span class="highlight">추가 인센티브</span> 지급</li>
+            <li>외부 수익 창출을 용접사가 주체적으로 할 수 있음</li>
+            <li>회사도 물량 증가로 Win-Win</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 9: 용접사 직접 영업 인센티브 방식 -->
+    <div class="slide">
+      <div class="slide-number">9 / 15</div>
+      <div class="slide-content">
+        <h2>용접사 직접 영업 인센티브 방식</h2>
+        <h3>운영 방식</h3>
+        <ol>
+          <li>용접사가 지인·파트너·기존 고객 접촉</li>
+          <li>제작 가능 제품(하우징·탱크 등) 수주 의향 확인</li>
+          <li>생산팀 + 영업팀 함께 단가 검토</li>
+          <li>회사 정책에 맞을 경우</li>
+          <li>오더 발행 후 제작 진행</li>
+          <li><span class="highlight">수주한 용접사에게 인센티브 지급</span></li>
+        </ol>
+        <h3>인센티브 방식</h3>
+        <ul>
+          <li>수주금액의 <span class="highlight">일정 비율(예: 3~5%)</span></li>
+          <li>또는 제품 1대당 <span class="highlight">고정 인센티브(예: 30~50만 원)</span></li>
+          <li>제전단가 정산 외 별도 지급</li>
+          <li>영업부 기준과 충돌하지 않도록 협의</li>
+        </ul>
+        <h3>효과</h3>
+        <div class="goal-list">
+          <ul>
+            <li>물량 부족 문제를 "용접사가 직접 해결할 수 있는 구조"로 전환</li>
+            <li>용접사의 수입 불안 완화</li>
+            <li>회사는 추가 오더 확보 → 매출 증가</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 10: 자재 입고·물량 안정화 프로세스 -->
+    <div class="slide">
+      <div class="slide-number">10 / 15</div>
+      <div class="slide-content">
+        <h2>자재 입고·물량 안정화 프로세스</h2>
+        <div class="structure-list">
+          <div class="key-point"><span class="checkmark">✅</span> 제조전표 발행 = 전량 입고일</div>
+          <ul style="margin-left: 50px; margin-top: 10px;">
+            <li>구매팀과 협의해 D-3, D-1 체크 시스템 운영</li>
+          </ul>
+          <div class="key-point"><span class="checkmark">✅</span> 단납기 수주 제한</div>
+          <ul style="margin-left: 50px; margin-top: 10px;">
+            <li>추가 인건비 없는 단납기 수주는 제조 적자</li>
+            <li>영업부와 단납기 룰 협의</li>
+          </ul>
+          <div class="key-point"><span class="checkmark">✅</span> 월 20~30대 확보 목표</div>
+          <ul style="margin-left: 50px; margin-top: 10px;">
+            <li>물량 가시성 확보 → 용접사 이탈 방지 핵심</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 11: 2026년 월별 운영계획 -->
+    <div class="slide">
+      <div class="slide-number">11 / 15</div>
+      <div class="slide-content">
+        <h2>2026년 월별 운영계획(상세)</h2>
+        <div class="structure-list">
+          <h3>1~3월</h3>
+          <ul>
+            <li>정산제 도입</li>
+            <li>가중치 초기값 적용</li>
+            <li>자재·도면 공유 체계 정착</li>
+            <li>직접영업 절차 및 단가 검토 프로세스 마련</li>
+          </ul>
+          <h3>4~6월</h3>
+          <ul>
+            <li>외주 견적 비교</li>
+            <li>RT/납기/불량 데이터 수집</li>
+            <li>용접사 이탈 방지 상담·미팅</li>
+            <li>가중치 1차 조정</li>
+          </ul>
+          <h3>7~9월</h3>
+          <ul>
+            <li>표준공정시간 보정</li>
+            <li>외주 대비 손익 분석</li>
+            <li>자체영업 성과 반영 체계 운영</li>
+          </ul>
+          <h3>10~12월</h3>
+          <ul>
+            <li>2027 공정단가 초안</li>
+            <li>소사장제 계약 시안</li>
+            <li>물량 안정화 대책 최종 점검</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 12: 등급제 평가지 -->
+    <div class="slide">
+      <div class="slide-number">12 / 15</div>
+      <div class="slide-content">
+        <h2>등급제 평가지(요약)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>지표</th>
+              <th>평가내용</th>
+              <th>배점</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>품질</strong></td>
+              <td>RT합격률 / 하자율</td>
+              <td>품질수준·재검률·불량 발견력</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td><strong>납기</strong></td>
+              <td>계획 준수율</td>
+              <td>리드타임 준수·지각 건</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td><strong>생산성</strong></td>
+              <td>표준시간 편차</td>
+              <td>작업속도·생산성</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td><strong>기술력</strong></td>
+              <td>용접/제관 기술</td>
+              <td>난이도 공정 수행능력</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td><strong>기여도</strong></td>
+              <td>문제해결·지원</td>
+              <td>협업·즉각 대응</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td><strong>안전/규정</strong></td>
+              <td>REV·5S</td>
+              <td>위반 여부</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td><strong>소통</strong></td>
+              <td>보고·협조</td>
+              <td>생산/품질과의 협업</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td><strong>총계</strong></td>
+              <td></td>
+              <td></td>
+              <td><strong>100</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 슬라이드 13: 2027년 소사장제 로드맵 -->
+    <div class="slide">
+      <div class="slide-number">13 / 15</div>
+      <div class="slide-content">
+        <h2>2027년 소사장제 로드맵</h2>
+        <div class="structure-list">
+          <ul>
+            <li>2026년 데이터를 기반으로 공정 단가 확정</li>
+            <li>가중치 반영 → 실력 기반 차등 수익</li>
+            <li>외주 대비 단가 경쟁력 확보</li>
+            <li>용접사가 직접 영업한 물량도 도급단가로 정산 가능</li>
+          </ul>
+        </div>
+        <div class="key-point" style="text-align: center; margin-top: 40px; font-size: 32px;">
+          2027년 1월<br>
+          <span class="checkmark">✅</span> <span class="highlight">완전 소사장제 시행</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 14: 기대 효과 -->
+    <div class="slide">
+      <div class="slide-number">14 / 15</div>
+      <div class="slide-content">
+        <h2>기대 효과</h2>
+        <div class="structure-list">
+          <h3>회사</h3>
+          <ul>
+            <li>손실 제거</li>
+            <li>변동비로 비용 안정</li>
+            <li>물량 증가 시 이익 극대화</li>
+            <li>자체영업으로 신규매출 확보</li>
+          </ul>
+          <h3>용접사</h3>
+          <ul>
+            <li>실력만큼 수익 증가</li>
+            <li>회사사유 손실 없음</li>
+            <li>직접 영업 가능 → 수입 기회 확장</li>
+            <li>공정한 평가 기반 보상</li>
+          </ul>
+          <h3>전사</h3>
+          <ul>
+            <li>영업·구매·생산·품질 협업체계 정착</li>
+            <li>자재·물량 흐름 안정</li>
+            <li>생산 경쟁력 강화</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 슬라이드 15: 결론 -->
+    <div class="slide title-slide">
+      <div class="slide-number">15 / 15</div>
+      <h1>결론</h1>
+      <div class="subtitle" style="font-size: 32px; margin-top: 40px;">
+        2026년은 <span class="highlight">안정화 + 공정성 구축 + 손실 제거</span>의 해
+      </div>
+      <div class="subtitle" style="font-size: 32px; margin-top: 30px;">
+        2027년은 <span class="highlight">수익 극대화 + 완전 소사장제 실현</span>의 해
+      </div>
+      <div class="author" style="bottom: 150px; font-size: 28px; margin-top: 60px;">
+        엠에프테크 생산팀의<br>
+        새로운 운영 기준을 만들겠습니다.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="navigation">
+    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ 이전</button>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">다음 ▶</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(n) {
+      if (n >= totalSlides) {
+        currentSlide = 0;
+      } else if (n < 0) {
+        currentSlide = totalSlides - 1;
+      } else {
+        currentSlide = n;
+      }
+
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active');
+        if (index === currentSlide) {
+          slide.classList.add('active');
+        }
+      });
+
+      // 버튼 상태 업데이트
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    function changeSlide(direction) {
+      showSlide(currentSlide + direction);
+    }
+
+    // 키보드 네비게이션
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        changeSlide(-1);
+      } else if (e.key === 'ArrowRight') {
+        changeSlide(1);
+      }
+    });
+
+    // 초기 설정
+    showSlide(0);
+  </script>
+</body>
+</html>
+
